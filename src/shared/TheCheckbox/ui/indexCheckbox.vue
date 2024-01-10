@@ -8,5 +8,7 @@
 
 
 <style scoped>
-
+    .checkbox {
+        background-color: black;
+    }
 </style>
