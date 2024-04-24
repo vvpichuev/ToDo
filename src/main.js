@@ -1,7 +1,8 @@
 import { createApp } from 'vue'
-import './style.css'
 import App from './App.vue'
+import './assets/styles/css/index.css'
+
+
 
 const vueApp = createApp(App)
 vueApp.mount('#app')
-console.log(vueApp)
