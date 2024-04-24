@@ -12,7 +12,7 @@
         <input class="task-name-input" type="text" placeholder="Type a new task">
         <button class="create-task-button" @click="tasks.push(1)" >Create <img src="src/assets/svg/plus.svg" alt=""></button>
       </div>
-      <!--
+
             <div class="tasks-wrapper">
 
               <div class="wrapper">
@@ -25,11 +25,12 @@
                   <span class="completed-tasks-counter">0</span>
                 </div>
               </div>
+              <span class="wrapper__underline"></span>
 
               <div class="empty-wrap" v-if="!tasks.length">
                 <img class="clipboard-icon" src="../assets/svg/clipboard.svg" alt="">
                 <p>
-                  You don't have any tasks registered yet. <br>
+                  You don't have any tasks registered yet. <br><br>
                   Create tasks and organize your to-do items.
                 </p>
               </div>
@@ -41,7 +42,6 @@
 
             </div>
 
-            -->
     </div>
 </template>
 
@@ -52,7 +52,6 @@
 
 
 <style lang="scss" scoped >
-//@import "@/assets/styles/scss/index";
 
     .index-page {
         width: 100%;
@@ -74,7 +73,11 @@
         position: relative;
 
         @include media($xs){
-          height: 140px;
+          height: 120px;
+        }
+
+        @include media($l){
+          height: 200px;
         }
 
         .header__link {
@@ -85,6 +88,11 @@
         .header__logo {
           height: 36px;
           padding-top: 10px;
+
+          @include media($l){
+            height: 56px;
+            padding-top: 6px;
+          }
         }
 
         .header__heading {
@@ -98,6 +106,10 @@
           padding: 0;
           height: 48px;
 
+          @include media($l){
+            font-size: 64px;
+          }
+
           .color-text {
             color: #5E60CE;
           }
@@ -107,22 +119,31 @@
     }
 
 
-
-
-
-
-
-
-
-
     .new-task-field {
       display: flex;
       justify-content: center;
       align-items: center;
       gap: 8px;
       position: absolute;
-      top: 170px;
-      left: 470px;
+      top:25%;
+      left:50%;
+      transform:translate(-50%, -50%);
+
+
+      @include media($xs){
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        position: absolute;
+      }
+      @include media($xs){
+        top:22%;
+      }
+
+      @include media($l){
+        top:26%;
+      }
 
       .task-name-input {
         width: 640px;
@@ -133,6 +154,30 @@
         color: #ffffff;
         padding-left: 16px;
         border: 1px solid #0D0D0D;
+
+        @include media($xs){
+          width: 50dvw;
+          height: 34px;
+          font-size: 14px;
+        }
+
+        @include media($s){
+          width: 60dvw;
+          height: 42px;
+          font-size: 14px;
+        }
+
+        @include media($m){
+          width: 60dvw;
+          height: 42px;
+          font-size: 14px;
+        }
+
+        @include media($l){
+          width: 640px;
+          height: 54px;
+          font-size: 14px;
+        }
       }
 
       .task-name-input:focus::placeholder {
@@ -144,8 +189,7 @@
       }
 
       .create-task-button {
-        width: 90px;
-        height: 52px;
+
         border-radius: 8px;
         border: none;
         background-color: #1E6F9F;
@@ -155,6 +199,23 @@
         justify-content: center;
         align-items: center;
         gap: 8px;
+
+        @include media($xs){
+          padding: 10px;
+          font-size: 14px;
+        }
+
+        @include media($s){
+          padding: 14px;
+          font-size: 14px;
+        }
+
+        @include media($l){
+          padding: 16px;
+          font-size: 18px;
+          font-weight: 500;
+          gap: 12px;
+        }
       }
     }
 
@@ -164,16 +225,46 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      width: 740px;
+      align-items: center;
+      width: 100%;
       height: 290px;
-      margin-top: 90px;
+
+      @include media($xs){
+        margin-top: 160px;
+      }
+
+
+      .wrapper {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+
+
+        @include media($xs){
+          gap:60px;
+        }
+        @include media($s){
+          gap:40dvw;
+        }
+        @include media($m){
+          box-sizing: border-box;
+          justify-content: space-between;
+          max-width: 690px;
+          gap: inherit;
+        }
+      }
+
+      .wrapper__underline {
+
+        width: 90%;
+        max-width: 740px;
+        border-bottom: 2px solid #333333;
+
+      }
 
     }
 
-    .wrapper {
-      display: flex;
-      justify-content: space-between;
-    }
+
 
     .task-list-wrapper {
       display: flex;
@@ -182,7 +273,8 @@
     }
 
     .task-list-heading {
-    color: #4EA8DE;
+      color: #4EA8DE;
+      width: 68px;
     }
 
     .current-tasks-counter {
@@ -215,7 +307,6 @@
       gap: 16px;
       padding: 64px 24px;
       text-align: center;
-      border-top: 2px solid #333333;
     }
 
     .clipboard-icon {
