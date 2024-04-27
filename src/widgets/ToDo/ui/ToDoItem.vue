@@ -12,9 +12,7 @@
 </template>
 
 <script setup>
-    import indexCheckbox from '../../../shared/TheCheckbox/ui/index.vue';
-    import indexInput from '../../../shared/TheInput/ui/index.vue';
-    import IndexButton from '../../../shared/TheButton/ui/index.vue';
+
     
 </script>
 
