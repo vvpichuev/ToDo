@@ -10,12 +10,12 @@
 
       <div class="new-task-field">
         <input class="task-name-input" type="text" placeholder="Type a new task">
-        <button class="create-task-button" @click="tasks.push(1)" >Create <img src="src/assets/svg/plus.svg" alt=""></button>
+        <button class="create-task-button" @click="tasks.push(1);" >Create <img src="src/assets/svg/plus.svg" alt=""></button>
       </div>
 
             <div class="tasks-wrapper">
 
-              <div class="wrapper">
+              <div class="wrapper" >
                 <div class="task-list-wrapper">
                   <p class="task-list-heading">Task list</p>
                   <span class="current-tasks-counter">0</span>
@@ -27,7 +27,7 @@
               </div>
               <span class="wrapper__underline"></span>
 
-              <div class="empty-wrap" v-if="!tasks.length">
+              <div class="empty-wrap" v-if="!tasks.length >= 1">
                 <img class="clipboard-icon" src="../assets/svg/clipboard.svg" alt="">
                 <p>
                   You don't have any tasks registered yet. <br><br>
@@ -35,10 +35,7 @@
                 </p>
               </div>
 
-              <div>
-
-              </div>
-
+              <ToDoItem v-else />
 
             </div>
 
@@ -47,6 +44,7 @@
 
 <script setup>
   import {ref} from "vue";
+  import ToDoItem from "@/widgets/ToDo/ui/ToDoItem.vue";
    const tasks = ref([])
 </script>
 
