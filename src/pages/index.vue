@@ -9,7 +9,7 @@
         </header>
 
       <div class="new-task-field">
-        <input class="task-name-input" type="text" placeholder="Type a new task">
+        <TheInput class="task-name-input" placeholder="Type a new task"/>
         <button class="create-task-button" @click="tasks.push(1);" >Create <img src="src/assets/svg/plus.svg" alt=""></button>
       </div>
 
@@ -45,6 +45,7 @@
 <script setup>
   import {ref} from "vue";
   import ToDoItem from "@/widgets/ToDo/ui/ToDoItem.vue";
+  import TheInput from "@/shared/TheInput/ui/index.vue";
    const tasks = ref([])
 </script>
 
@@ -136,11 +137,11 @@
         position: absolute;
       }
       @include media($xs){
-        top:22%;
+        top:25%;
       }
 
       @include media($l){
-        top:26%;
+        top:28%;
       }
 
       .task-name-input {
@@ -228,7 +229,11 @@
       height: 290px;
 
       @include media($xs){
-        margin-top: 160px;
+        margin-top: 140px;
+      }
+
+      @include media($l){
+        margin-top: 90px;
       }
 
 

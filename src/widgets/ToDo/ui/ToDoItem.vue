@@ -3,16 +3,16 @@
 
       <div class="checkbox">
         <input type="checkbox" id="custom-checkbox">
+
         <label for="custom-checkbox"></label>
       </div>
-
-      <input class="task-text-field" type="text">
-      <button><img src="@/assets/svg/delete_icon.svg" alt=""></button>
+      <TheInput class="task-text-field"/>
+      <button class="delete_button"><img class="delete_icon" src="@/assets/svg/delete.svg" alt=""></button>
     </div>
 </template>
 
 <script setup>
-
+import TheInput from '@/shared/TheInput/ui/index.vue';
     
 </script>
 
@@ -61,6 +61,18 @@
         background-color: transparent;
         border: none;
         color: white;
+      }
+
+      .delete_button {
+        background-color: transparent;
+        outline: none;
+        border: none;
+
+        .delete_icon {
+          width: 18px;
+          height: 18px;
+        }
+
       }
     }
 </style>
