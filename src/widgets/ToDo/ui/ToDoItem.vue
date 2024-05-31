@@ -6,14 +6,22 @@
 
         <label for="custom-checkbox"></label>
       </div>
-      <TheInput class="task-text-field"/>
+      <TheInput class="task-text-field" v-model="task.text" />
       <button class="delete_button"><img class="delete_icon" src="@/assets/svg/delete.svg" alt=""></button>
     </div>
 </template>
 
 <script setup>
 import TheInput from '@/shared/TheInput/ui/index.vue';
-    
+
+const props = defineProps({
+  task: {
+    type: Object,
+    required: true
+  }
+})
+
+
 </script>
 
 

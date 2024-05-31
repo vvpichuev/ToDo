@@ -9,8 +9,8 @@
         </header>
 
       <div class="new-task-field">
-        <TheInput class="task-name-input" placeholder="Type a new task"/>
-        <button class="create-task-button" @click="tasks.push(1);" >Create <img src="src/assets/svg/plus.svg" alt=""></button>
+        <TheInput class="task-name-input" v-model="newTodo" placeholder="Type a new task"/>
+        <button class="create-task-button" @click="addTodo" >Create <img src="src/assets/svg/plus.svg" alt=""></button>
       </div>
 
             <div class="tasks-wrapper">
@@ -35,7 +35,7 @@
                 </p>
               </div>
 
-              <ToDoItem v-else />
+              <ToDoItem v-for="task in tasks" :key="task.id" v-else :task="task" />
 
             </div>
 
@@ -46,7 +46,21 @@
   import {ref} from "vue";
   import ToDoItem from "@/widgets/ToDo/ui/ToDoItem.vue";
   import TheInput from "@/shared/TheInput/ui/index.vue";
-   const tasks = ref([])
+
+
+  const text = ref("")
+  const newTodo = ref("")
+  function addTodo() {
+    const todoItem = { id:Date.now(), text:newTodo.value }
+    tasks.value.push(todoItem)
+    newTodo.value = ""
+  }
+
+   const tasks = ref([
+
+   ])
+
+
 </script>
 
 
