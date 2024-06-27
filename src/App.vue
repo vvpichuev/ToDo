@@ -1,13 +1,11 @@
 <template>
-    <div class="app">
-        <IndexPage/>
-    </div>
+  <div class="app">
+    <IndexPage />
+  </div>
 </template>
 
 <script setup>
     import IndexPage from './pages/index.vue'
-
-
 </script>
 
 

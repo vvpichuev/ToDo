@@ -1,5 +1,9 @@
 <template>
-        <input type="text" v-model="description"/>
+  <input
+    v-model="description"
+    type="text"
+    @keyup="addTodo"
+  >
 </template>
 
 <script setup>
@@ -27,8 +31,6 @@ const description = computed({
 
 
 </script>
-
-
 <style scoped>
 
 </style>

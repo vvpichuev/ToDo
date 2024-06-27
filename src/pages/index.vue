@@ -1,70 +1,141 @@
 <template>
+  <div class="index-page">
+    <header class="header">
+      <a
+        class="header__link"
+        href="index.html"
+      >
+        <img
+          class="header__logo"
+          src="src/assets/svg/rocket.svg"
+          alt="logo"
+        >
+        <h1 class="header__heading">to <span class="color-text">do</span></h1>
+      </a>
+    </header>
 
-    <div class="index-page">
-        <header class="header">
-          <a class="header__link" href="index.html">
-            <img class="header__logo" src="src/assets/svg/rocket.svg" alt="logo"/>
-            <h1 class="header__heading">to <span class="color-text">do</span></h1>
-          </a>
-        </header>
-
+    <main class="main">
       <div class="new-task-field">
-        <TheInput class="task-name-input" v-model="newTodo" placeholder="Type a new task"/>
-        <button class="create-task-button" @click="addTodo" >Create <img src="src/assets/svg/plus.svg" alt=""></button>
+        <TheInput
+          v-model="newTodo"
+          class="task-name-input"
+          placeholder="Type a new task"
+        />
+        <button
+          class="create-task-button"
+          @click="addTodo"
+        >
+          Create <img
+            src="src/assets/svg/plus.svg"
+            alt=""
+          >
+        </button>
       </div>
 
-            <div class="tasks-wrapper">
+      <div class="tasks-wrapper">
+        <div class="wrapper">
+          <div class="task-list-wrapper">
+            <p class="task-list-heading">
+              Task list
+            </p>
+            <span class="current-tasks-counter">{{ count }}</span>
+          </div>
+          <div class="completed-task-wrapper">
+            <p class="completed-task-heading">
+              Completed
+            </p>
+            <span class="completed-tasks-counter">0</span>
+          </div>
+        </div>
 
-              <div class="wrapper" >
-                <div class="task-list-wrapper">
-                  <p class="task-list-heading">Task list</p>
-                  <span class="current-tasks-counter">0</span>
-                </div>
-                <div class="completed-task-wrapper">
-                  <p class="completed-task-heading">Completed</p>
-                  <span class="completed-tasks-counter">0</span>
-                </div>
-              </div>
-              <span class="wrapper__underline"></span>
+        <!--           <span class="wrapper__underline"></span>-->
 
-              <div class="empty-wrap" v-if="!tasks.length >= 1">
-                <img class="clipboard-icon" src="../assets/svg/clipboard.svg" alt="">
-                <p>
-                  You don't have any tasks registered yet. <br><br>
-                  Create tasks and organize your to-do items.
-                </p>
-              </div>
+        <div
+          v-if="!tasks.length >= 1"
+          class="empty-wrap"
+        >
+          <img
+            class="clipboard-icon"
+            src="../assets/svg/clipboard.svg"
+            alt=""
+          >
+          <p>
+            You don't have any tasks registered yet. <br><br>
+            Create tasks and organize your to-do items.
+          </p>
+        </div>
 
-              <ToDoItem v-for="task in tasks" :key="task.id" v-else :task="task" />
-
-            </div>
-
-    </div>
+        <ul
+          v-else
+          class="tasks-list"
+        >
+          <li
+            v-for="task in tasks"
+            :key="task.id"
+            class="tasks-list__item"
+          >
+            <ToDoItem
+              class="to-do_item"
+              :task="task"
+            />
+          </li>
+        </ul>
+      </div>
+    </main>
+  </div>
 </template>
 
 <script setup>
-  import {ref} from "vue";
+  import {ref, onMounted} from "vue";
   import ToDoItem from "@/widgets/ToDo/ui/ToDoItem.vue";
   import TheInput from "@/shared/TheInput/ui/index.vue";
 
 
+
+
   const text = ref("")
   const newTodo = ref("")
+
+  let count = ref(0)
+
+  function currentTasksCounter() {
+
+    if (tasks.value.length >= 1) {
+      return count.value++
+    }
+  }
+
   function addTodo() {
     const todoItem = { id:Date.now(), text:newTodo.value }
     tasks.value.push(todoItem)
+    localStorage.setItem('tasks', JSON.stringify(tasks.value))
     newTodo.value = ""
+    currentTasksCounter()
   }
 
-   const tasks = ref([
+  function getTasksFromStorage () {
+    const listTasks = localStorage.getItem('tasks')
+    const parsedData = JSON.parse(listTasks)
+    tasks.value = parsedData || []
+  }
 
-   ])
 
+  /*
+  * 1. ПОлучить таски с локал стореджа
+  * 2. Преобразовать JSON в объект и сделать проверку на пустой массив
+  * 3. Устанавливаем результат в tasks.value
+  * */
+   const tasks = ref([])
+
+
+  onMounted(() => {
+   getTasksFromStorage()
+  })
 
 </script>
 
 
-<style lang="scss" scoped >
+<style lang="scss" scoped>
 
     .index-page {
         width: 100%;
@@ -74,24 +145,26 @@
         font-family: Verdana, Geneva, Tahoma, sans-serif;
         display: flex;
         flex-direction: column;
-        align-items: center;
+
 
       .header {
         display: flex;
         justify-content: center;
         align-items: center;
         width: 100%;
-        height: 200px;
+        //height: 200px;
         background: #0D0D0D;
         position: relative;
+        padding-top: 72px;
+        padding-bottom: 55px;
 
-        @include media($xs){
-          height: 120px;
-        }
-
-        @include media($l){
-          height: 200px;
-        }
+        //@include media($xs){
+        //  height: 120px;
+        //}
+        //
+        //@include media($l){
+        //  height: 200px;
+        //}
 
         .header__link {
           display: flex;
@@ -119,8 +192,9 @@
           padding: 0;
           height: 48px;
 
+
           @include media($l){
-            font-size: 64px;
+            //font-size: 64px;
           }
 
           .color-text {
@@ -131,16 +205,17 @@
       }
     }
 
+    .main {
+      flex-grow: 1;
+      height: 100%;
+    }
+
 
     .new-task-field {
       display: flex;
       justify-content: center;
       align-items: center;
       gap: 8px;
-      position: absolute;
-      top:25%;
-      left:50%;
-      transform:translate(-50%, -50%);
 
 
       @include media($xs){
@@ -148,15 +223,8 @@
         justify-content: center;
         align-items: center;
         gap: 8px;
-        position: absolute;
-      }
-      @include media($xs){
-        top:25%;
       }
 
-      @include media($l){
-        top:28%;
-      }
 
       .task-name-input {
         width: 640px;
@@ -237,24 +305,31 @@
     .tasks-wrapper {
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
       width: 100%;
-      height: 290px;
+      height: 100%;
 
-      @include media($xs){
-        margin-top: 140px;
+
+      .tasks-list {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        list-style-type:  none;
+        max-width: 740px;
+        width: 100%;
+        padding: 0;
+        overflow: auto;
+        height: 100%;
       }
 
-      @include media($l){
-        margin-top: 90px;
-      }
 
 
       .wrapper {
         display: flex;
         justify-content: center;
         width: 100%;
+        height: 40px;
+        border-bottom: 1px solid #ffffff;
 
 
         @include media($xs){
@@ -279,6 +354,15 @@
 
       }
 
+      .to-do_item {
+        gap: 10px;
+        box-sizing: border-box;
+      }
+
+    }
+
+    .tasks-wrapper:last-child {
+      gap: 20px;
     }
 
 
@@ -331,5 +415,11 @@
       height: 56px;
     }
 
+    .tasks_list {
+      overflow: auto;
+      display: flex;
+      flex-direction: column;
+      gap:10px;
+    }
 
 </style>

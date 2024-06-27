@@ -1,7 +1,5 @@
 <template>
-    <div class="to-do">
-        
-    </div>
+  <div class="to-do" />
 </template>
 
 <script setup>
